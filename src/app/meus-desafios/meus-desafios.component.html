@@ -1,0 +1,60 @@
+<div
+    style="padding-left: 10rem; padding-right: 10rem; display: flex; flex-direction: column; justify-content: center; margin-bottom: 4rem;">
+    <h1 style="font-weight: bolder; font-size: 2rem; margin-bottom: 1rem;">Meus desafios</h1>
+    <p style="color: #64748B; margin-bottom: 2rem; width: 35rem;">Acompanhe e atualize seus desafios ativos</p>
+  
+    <div *ngIf="loading" style="display: flex; justify-content: center;">
+        <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
+      </div>
+    
+      <div *ngIf="!loading && desafios.length === 0" style="text-align: center;">
+        <p>Você ainda não aceitou nenhum desafio.</p>
+      </div>
+    
+      <div *ngIf="!loading && desafios.length > 0"
+        style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between;">
+    
+        <mat-card *ngFor="let desafio of desafios" class="example-card" appearance="outlined"
+          style="flex: 0 0 calc(33.333% - 13.33px); box-sizing: border-box;">
+    
+          <img mat-card-image [src]="getImageForType(desafio.type)" alt="Imagem ilustrativa"
+            style="width: 100%; height: 200px; object-fit: cover;">
+    
+          <mat-card-content>
+            <p style="font-size: larger; margin-top: 1rem; font-weight: bold;">{{ desafio.activity }}</p>
+            <p style="margin: 0;">Tipo: {{ translateType(desafio.type) }}</p>
+            <p style="margin: 0;">Status: {{ desafio.status }}</p>
+            <p style="margin: 0;" *ngIf="desafio.started_at">Iniciado em: {{ desafio.started_at | date: 'short' }}</p>
+            <p style="margin: 0;" *ngIf="desafio.completed_at">Concluído em: {{ desafio.completed_at | date: 'short' }}</p>
+    
+            <!-- Progresso -->
+            <div *ngIf="desafio.started_at" style="margin-top: 1rem;">
+              <mat-progress-bar [value]="desafio.progresso || 0" mode="determinate" color="primary"></mat-progress-bar>
+    
+              <div *ngIf="desafio.progresso < 100"
+                style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
+                <mat-form-field appearance="outline" style="width: 80px;">
+                  <mat-label>Progresso</mat-label>
+                  <input matInput type="number" [(ngModel)]="desafio.progresso" min="0" max="100">
+                </mat-form-field>
+    
+                <button mat-flat-button color="primary" (click)="atualizarProgresso(desafio)">
+                  Atualizar
+                </button>
+              </div>
+    
+              <!-- Quando progresso é 100% -->
+              <div *ngIf="desafio.progresso >= 100" style="margin-top: 0.75rem; text-align: center;">
+                <p style="color: green; font-weight: bold;">Desafio concluído!</p>
+                <button mat-flat-button color="warn" (click)="excluirDesafio(desafio)">Excluir desafio</button>
+              </div>
+            </div>
+          </mat-card-content>
+    
+          <!-- Botão para iniciar -->
+          <mat-card-actions *ngIf="!desafio.started_at">
+            <button mat-flat-button color="primary" (click)="iniciarDesafio(desafio)">Iniciar desafio</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+</div>

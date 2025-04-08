@@ -1,0 +1,39 @@
+<div
+    style="padding-left: 10rem; padding-right: 10rem; display: flex; flex-direction: column; justify-content: center; margin-bottom: 4rem;">
+    <h1 style="font-weight: bolder; font-size: 2rem; margin-bottom: 1rem;">Explore os desafios</h1>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <mat-card *ngFor="let desafio of desafios" class="example-card" appearance="outlined"
+            style="flex: 0 0 calc(33.333% - 13.33px); box-sizing: border-box;">
+
+            <img mat-card-image [src]="getImageForType(desafio.type)" alt="Imagem ilustrativa"
+                style="width: 100%; height: 200px; object-fit: cover;" />
+
+            <mat-card-content>
+                <p style="font-size: larger; margin-top: 1rem; font-weight: bold;">{{ desafio.activity }}</p>
+                <p style="margin: 0;">Tipo: {{ translateType(desafio.type) }}</p>
+                <p style="margin: 0;">Acessibilidade: {{ desafio.accessibility }}</p>
+                <p style="margin: 0;">Qnt de participantes: {{ desafio.participants }}</p>
+            </mat-card-content>
+
+            <mat-card-actions *ngIf="isLoggedIn">
+                <button mat-flat-button style="background-color: #D2CCFC; width: 100%;" (click)="aceitarDesafio(desafio)">Aceitar o desafio</button>
+              </mat-card-actions>
+        </mat-card>
+    </div>
+    <div *ngIf="loading" style="
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100%;
+">
+        <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
+    </div>
+    <div *ngIf="!loading && indiceAtual < tiposDeAtividade.length" style="text-align: center; margin-top: 2rem;">
+        <button mat-flat-button color="primary" (click)="carregarProximoTipo()">
+            Ver mais
+        </button>
+    </div>
+</div>

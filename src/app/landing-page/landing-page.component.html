@@ -1,0 +1,92 @@
+<div
+    style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 30vh; text-align: center; background-color: #D2CCFC; color: #A689FA; padding-top: 2.5rem; padding-bottom: 2.5rem;">
+    <h1 style="font-weight: bolder; font-size: 4rem; margin-bottom: 2rem;">Desafie-se a crescer</h1>
+    <p style="color: #64748B;; margin-bottom: 2rem; width: 35rem; font-size: 1rem;">Encontre, monitore e supere desafios
+        que desafie seus limites e ajude você a se tornar a melhor versão de si mesmo.</p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <button mat-flat-button style="background-color: #A689FA; color:#F6F8FE;" [routerLink]="['/desafios']">Explore os desafios</button>
+        <button mat-flat-button style="background-color: #F6F8FE; color:#0c0c0c" [routerLink]="['/login']">Começar</button>
+    </div>
+</div>
+<div
+    style="padding-left: 10rem; padding-right: 10rem; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 4rem; margin-bottom: 4rem;">
+    <h1 style="font-weight: bolder; font-size: 2rem; margin-bottom: 1rem;">Como funciona?</h1>
+    <p style="color: #64748B; margin-bottom: 2rem; width: 35rem;text-align: center">O Challenge Me ajuda você a
+        encontrar, salvar e monitorar desafios que se alinham com suas metas de crescimento
+        pessoal.</p>
+    <div style="display: flex; flex-direction: row; gap: 30px;">
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header style="margin-bottom: 1rem;">
+                <mat-card-title>Encontre o seu desafio</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p style="color: #64748B;">Navegue por uma coleção diversificada de desafios em diferentes categorias e
+                    níveis de dificuldade.
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header style="margin-bottom: 1rem;">
+                <mat-card-title>Acompanhe seu progresso</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p style="color: #64748B;">Atualize e visualize facilmente seu progresso à medida que você enfrenta cada
+                    desafio.
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header style="margin-bottom: 1rem;">
+                <mat-card-title>Salvar para mais tarde</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p style="color: #64748B;">Marque os desafios nos quais você tem interesse e comece-os quando estiver
+                    pronto.
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header style="margin-bottom: 1rem;">
+                <mat-card-title>Construa novos hábitos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p style="color: #64748B;">Transforme sua vida, um desafio de cada vez, desenvolvendo rotinas
+                    consistentes.
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <h1 style="font-weight: bolder; font-size: 2rem; margin-bottom: 1rem; margin-top: 5rem;">Desafios em destaque</h1>
+    <p style="color: #64748B; margin-bottom: 2rem; width: 35rem;text-align: center">Comece com um desses desafios
+        populares para dar início à sua jornada</p>
+        <div *ngIf="carregandoDesafios" style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 2rem 0;">
+            <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
+          </div>
+        <div *ngIf="!carregandoDesafios" style="display: flex; justify-content: space-between; width: 100%; gap: 20px;">
+            <mat-card *ngFor="let desafio of desafios" class="example-card" appearance="outlined" style="flex: 1;">
+                <img mat-card-image [src]="getImageForType(desafio.type)" alt="Imagem ilustrativa" style="width: 100%; height: 200px; object-fit: cover;">
+                <mat-card-content>
+                    <p style="font-size: larger; margin-top: 1rem; font-weight: bold;">{{ desafio.activity }}</p>
+                    <p style="margin: 0;">Tipo: {{ translateType(desafio.type) }}</p>
+                    <p style="margin: 0;">Acessibilidade: {{ desafio.accessibility }}</p>
+                    <p style="margin: 0;">Qnt de participantes: {{ desafio.participants }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button style="background-color: #D2CCFC; width: 100%;">Detalhes</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    <button mat-flat-button style="background-color: #F6F8FE; color:#0c0c0c; margin-top: 3rem;" [routerLink]="['/desafios']">Ver mais
+        desafios</button>
+</div>
+
+<div
+    style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 30vh; text-align: center; background-color: #D2CCFC; padding-top: 1rem; padding-bottom: 1rem;">
+    <h1 style="font-weight: bolder; font-size: 2rem; margin-bottom: 1rem;">Pronto para começar?</h1>
+    <p style="color: #64748B;; margin-bottom: 1rem; width: 35rem; font-size: 1rem;">Crie uma conta para salvar e
+        acompanhar seus desafios favoritos.</p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <button mat-flat-button style="background-color: #A689FA; color:#F6F8FE;" [routerLink]="['/login']">Inscreva-se agora</button>
+    </div>
+</div>
